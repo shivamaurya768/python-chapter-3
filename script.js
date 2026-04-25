@@ -805,8 +805,8 @@ function login_usar(){
 }
 
         let t=document.getElementById("time");
-        let total_time=39*60;
-        let min=39;
+        let total_time=60*60;
+        let min=59;
         let sec=60;
        
 
