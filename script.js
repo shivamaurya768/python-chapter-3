@@ -600,7 +600,7 @@ let q = [
     "D. display('Hello World')": false
   }]
 ];
-        let index = 0;
+                let index = 0;
         let total = 0;
         let answered = new Array(q.length).fill(false);
         let selectedAnswers = new Array(q.length).fill(null);
@@ -620,7 +620,6 @@ let q = [
             h_solov.appendChild(s_btn);
         }
 let tbtn=document.getElementsByClassName("sbtn")
-
         for (let i = 0; i < 4; i++) {
             let btn = document.createElement("button");
             btn.className = "b";
@@ -628,8 +627,6 @@ let tbtn=document.getElementsByClassName("sbtn")
             que.appendChild(btn);
             buttons.push(btn);
         }
-    
-
         function render() {
             let current = q[index];
             h2.textContent = current[0];
@@ -686,7 +683,6 @@ let tbtn=document.getElementsByClassName("sbtn")
                     total++;
                 }
             }
-            if(confirm("Do you want a  submit in this test")){
                  feedback.value = total;
                 // feedback.style.color = "blue";
                 document.getElementById("form_main").style.display="block";
@@ -696,7 +692,7 @@ let tbtn=document.getElementsByClassName("sbtn")
                 document.getElementById("time").style.display="none";
                 showCorrectAnswers();
                 
-            }
+            
         }
 
         function showCorrectAnswers() {
@@ -749,6 +745,7 @@ function quiz_start(){
     document.getElementById("quiz").style.display="block";
     document.getElementById("hh_solov").style.display="block";
     document.getElementById("detail").style.display="none";
+    enterFullscreen();
 }
 
 
@@ -773,7 +770,50 @@ function quiz_start(){
             sub_msg.style.display="block";
             //document.getElementById("form").style.display="block";
         }
-    
+//full screen 
+let enterFullscreen=()=>{
+    let elem=document.documentElement;
+    if(elem.requestFullscreen){
+        elem.requestFullscreen();
+    }
+}    
+document.addEventListener('fullscreenchange',() => {
+    if(!document.fullscreenElement){
+        alert("can not close the fullscreen window");
+        location.reload();
+
+    }
+});
+//copy disable
+document.addEventListener("copy",e => e.preventDefault());
+//paste disable
+document.addEventListener('paste',e => e.preventDefault());
+//right click disable
+document.addEventListener("contextmenu",e => e.preventDefault());
+// copy shorcut key disble
+document.addEventListener('keydown',function(e){
+    if(e.ctrlKey &&['c','v','u','x'].includes(e.key.toLocaleLowerCase())){
+        e.preventDefault();
+    }
+})
+//tab switch disble
+let violations=0;
+document.addEventListener("visibilitychange",() =>{
+    if(document.hidden){
+        violations++;
+        alert("can't switch the tab, detected ! count :"+violations)
+    }
+    if(violations >= 2){
+        alert("Exam terminated !");
+        document.getElementById("detail").style.display="none";
+        document.getElementById("login").style.display="none";
+        document.getElementById("form_main").style.display="block";
+        document.getElementById("quiz").style.display="none";
+        document.getElementById("hh_solov").style.display="none";
+        document.getElementById("time").style.display="none";
+        submitQuiz();
+    }
+})
 
 // show pass 
 let check_box=document.getElementById("remember");
@@ -805,13 +845,13 @@ function login_usar(){
 }
 
         let t=document.getElementById("time");
-        let total_time=60*60;
+        let total_time=59*60;
         let min=59;
         let sec=60;
        
 
 
-        function show_time(){
+function show_time(){
             if(sec==0){
                 t.innerHTML="Time out -->"+min+": "+sec;
                 sec=60;
@@ -821,7 +861,7 @@ function login_usar(){
             sec--;
         }
     setInterval(show_time, 1000);
-    let time_up=60000*60;
+    let time_up=60000*35;
     setTimeout(function(){
         alert("your exam finished");
         t.style.display="none";
