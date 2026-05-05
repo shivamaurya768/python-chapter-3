@@ -829,8 +829,8 @@ check_box.addEventListener('change', function(){
 // end show password
 
 //login user
-let user_name=""
-let password=0;
+let user_name="nscitm@123"
+let password=222202;
 let login_name=document.getElementById("user");
 function login_usar(){
     if(pass.value==password && login_name.value==user_name){
@@ -861,7 +861,7 @@ function show_time(){
             sec--;
         }
     setInterval(show_time, 1000);
-    let time_up=60000*35;
+    let time_up=60000*60;
     setTimeout(function(){
         alert("your exam finished");
         t.style.display="none";
